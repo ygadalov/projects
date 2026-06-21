@@ -42,7 +42,7 @@
         white-space:nowrap; padding-right:3px;
         background:linear-gradient(135deg,#60a5fa,#a78bfa); -webkit-background-clip:text; background-clip:text;
         -webkit-text-fill-color:transparent; color:transparent;}
-    .lockup .tag{font-size:11px; font-weight:600; letter-spacing:.24em; text-transform:uppercase; color:#5b6b86;
+    .lockup .tag{font-size:11px; font-weight:600; letter-spacing:.02em; text-transform:uppercase; color:#5b6b86;
         margin-top:9px; white-space:nowrap;}
 
     .hero h1{font-size:clamp(38px,6vw,68px); font-weight:800; line-height:1.08; letter-spacing:-0.025em; color:#fff;
@@ -102,8 +102,8 @@
         display:flex; align-items:center; justify-content:space-between; gap:20px; flex-wrap:wrap;}
     footer .fbrand{display:flex; align-items:center; gap:12px;}
     footer .fbrand svg{width:30px; height:30px;}
-    footer .fbrand .ft{font-size:15px; font-weight:800; color:var(--ink); letter-spacing:.03em;}
-    footer .fbrand .fv{font-family:'JetBrains Mono',monospace; font-size:12px; color:var(--faint); margin-top:2px;}
+    footer .fbrand .ft{font-size:21px; font-weight:800; color:var(--ink); letter-spacing:.04em; line-height:1;}
+    footer .fbrand .fv{font-size:11px; font-weight:600; letter-spacing:.02em; text-transform:uppercase; color:#5b6b86; margin-top:4px; white-space:nowrap;}
     footer .fcredit{font-size:13px; color:var(--muted); text-align:right;}
     footer .fcredit b{color:var(--body); font-weight:700;}
 
@@ -193,11 +193,48 @@
         <svg viewBox="17 17 86 86" fill="none" xmlns="http://www.w3.org/2000/svg"><defs><linearGradient id="fMark" x1="17" y1="103" x2="103" y2="17" gradientUnits="userSpaceOnUse"><stop stop-color="#3b82f6"></stop><stop offset="1" stop-color="#34d399"></stop></linearGradient></defs><path d="M17.00 103.00 L17.00 80.48 Q17.00 70.15 27.33 70.15 L33.71 70.15 L33.71 103.00 Z" fill="url(#fMark)"></path><path d="M40.10 103.00 L40.10 68.05 Q40.10 57.73 50.42 57.73 L56.81 57.73 L56.81 103.00 Z" fill="url(#fMark)"></path><path d="M63.19 103.00 L63.19 50.93 Q63.19 40.60 73.52 40.60 L79.90 40.60 L79.90 103.00 Z" fill="url(#fMark)"></path><path d="M86.29 103.00 L86.29 27.33 Q86.29 17.00 96.62 17.00 L103.00 17.00 L103.00 103.00 Z" fill="url(#fMark)"></path></svg>
         <div>
             <div class="ft">FIN ANALYST</div>
-            <div class="fv">v2.4.8 · FARM‑Score v3.9</div>
+            <div class="fv">Financial Assessment &amp; Risk Model</div>
         </div>
     </div>
     <div class="fcredit">Powered by <b>Gadalov BI</b> · AI‑Augmented Solutions<br>© 2026 · Все расчёты выполняются локально в браузере</div>
 </footer>
+
+<script>
+  // Подгонка тэглайна точно по ширину «FIN ANALYST» (вверху и в футере).
+  // Ширину МЕРЯЕМ через Range (ширина глифов), а не bounding box —
+  // иначе flex-stretch/блок отдают ширину контейнера, и подгонка не срабатывает.
+  function textW(el){
+    var r=document.createRange();
+    r.selectNodeContents(el);
+    var w=r.getBoundingClientRect().width;
+    if(r.detach) r.detach();
+    return w;
+  }
+  function fitTag(nameEl, tagEl){
+    if(!nameEl||!tagEl) return;
+    tagEl.style.whiteSpace='nowrap';
+    tagEl.style.letterSpacing='';
+    tagEl.style.fontSize='';
+    var base=parseFloat(getComputedStyle(tagEl).fontSize);
+    var nameW=textW(nameEl);
+    var natural=textW(tagEl);
+    if(!natural||!nameW) return;
+    // Сначала масштабируем размер шрифта под ширину имени (ровные буквы, без наложения),
+    var fs=Math.max(7.5, Math.min(base*1.3, base*(nameW/natural)));
+    tagEl.style.fontSize=fs.toFixed(2)+'px';
+    // затем точная доводка леттер-спейсингом до ширины имени.
+    var natural2=textW(tagEl);
+    var gaps=Math.max(1, tagEl.textContent.trim().length-1);
+    tagEl.style.letterSpacing=((nameW-natural2)/gaps).toFixed(3)+'px';
+  }
+  function fitAllTags(){
+    fitTag(document.querySelector('.lockup .nm'), document.querySelector('.lockup .tag'));
+    fitTag(document.querySelector('footer .fbrand .ft'), document.querySelector('footer .fbrand .fv'));
+  }
+  window.addEventListener('load', fitAllTags);
+  window.addEventListener('resize', fitAllTags);
+  if(document.fonts&&document.fonts.ready) document.fonts.ready.then(fitAllTags);
+</script>
 
 </body>
 </html>
