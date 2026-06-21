@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FIN ANALYST — Оценка финансового здоровья компании</title>
+<meta name="description" content="FIN ANALYST — браузерный инструмент анализа бухгалтерской отчётности: коэффициенты, интегральный балл FARM-Score, рекомендации и сценарное моделирование.">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 120 120'%3E%3Crect width='120' height='120' rx='27' fill='%230f172a'/%3E%3Cdefs%3E%3ClinearGradient id='g' x1='17' y1='103' x2='103' y2='17' gradientUnits='userSpaceOnUse'%3E%3Cstop stop-color='%233b82f6'/%3E%3Cstop offset='1' stop-color='%2334d399'/%3E%3C/linearGradient%3E%3C/defs%3E%3Cpath d='M17 103 L17 80.48 Q17 70.15 27.33 70.15 L33.71 70.15 L33.71 103 Z' fill='url(%23g)'/%3E%3Cpath d='M40.1 103 L40.1 68.05 Q40.1 57.73 50.42 57.73 L56.81 57.73 L56.81 103 Z' fill='url(%23g)'/%3E%3Cpath d='M63.19 103 L63.19 50.93 Q63.19 40.6 73.52 40.6 L79.9 40.6 L79.9 103 Z' fill='url(%23g)'/%3E%3Cpath d='M86.29 103 L86.29 27.33 Q86.29 17 96.62 17 L103 17 L103 103 Z' fill='url(%23g)'/%3E%3C/svg%3E">
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+    :root{
+        --ink:#0f172a; --body:#1e293b; --muted:#64748b; --faint:#94a3b8;
+        --line:#e2e8f0; --line2:#f1f5f9; --bg:#ffffff; --soft:#f8fafc;
+        --primary:#2563eb; --primary-dark:#1d4ed8; --primary-light:#eff6ff;
+        --accent:#7c3aed; --green:#059669; --amber:#d97706;
+        --navy:#0b1220;
+    }
+    *{box-sizing:border-box; margin:0; padding:0;}
+    html{scroll-behavior:smooth;}
+    body{font-family:'Manrope',system-ui,sans-serif; color:var(--body); background:var(--soft);
+        -webkit-font-smoothing:antialiased; line-height:1.6;}
+    a{text-decoration:none; color:inherit;}
+    .mono{font-family:'JetBrains Mono',monospace;}
+
+    /* ---------- HERO ---------- */
+    .hero{
+        position:relative; overflow:hidden;
+        background:radial-gradient(125% 125% at 82% 8%, #16223a 0%, #0b1220 52%, #070b13 100%);
+        color:#fff; padding:84px 32px 96px;
+    }
+    .hero::after{ /* subtle grid */
+        content:''; position:absolute; inset:0; opacity:.4; pointer-events:none;
+        background-image:linear-gradient(rgba(255,255,255,.025) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.025) 1px,transparent 1px);
+        background-size:48px 48px; mask-image:radial-gradient(80% 70% at 50% 30%, #000 0%, transparent 75%);
+    }
+    .wrap{max-width:1040px; margin:0 auto; position:relative; z-index:1;}
+
+    .lockup{display:flex; align-items:flex-start; gap:16px; margin-bottom:64px;}
+    .lockup svg{width:48px; height:48px; flex-shrink:0; margin-top:3px;}
+    .lockup .wm{display:inline-flex; flex-direction:column;}
+    .lockup .nm{font-size:32px; font-weight:800; letter-spacing:.05em; text-transform:uppercase; line-height:1;
+        white-space:nowrap; padding-right:3px;
+        background:linear-gradient(135deg,#60a5fa,#a78bfa); -webkit-background-clip:text; background-clip:text;
+        -webkit-text-fill-color:transparent; color:transparent;}
+    .lockup .tag{font-size:11px; font-weight:600; letter-spacing:.24em; text-transform:uppercase; color:#5b6b86;
+        margin-top:9px; white-space:nowrap;}
+
+    .hero h1{font-size:clamp(38px,6vw,68px); font-weight:800; line-height:1.08; letter-spacing:-0.025em; color:#fff;
+        max-width:880px; padding-bottom:6px;}
+    .hero h1 em{font-style:normal; background:linear-gradient(135deg,#60a5fa,#34d399);
+        -webkit-background-clip:text; background-clip:text; -webkit-text-fill-color:transparent; color:transparent;}
+    .hero .sub{font-size:clamp(17px,2.3vw,22px); color:#94a3b8; max-width:660px; margin-top:clamp(30px,4vw,42px); line-height:1.5;}
+    .hero .pills{display:flex; flex-wrap:wrap; gap:12px; margin-top:38px;}
+    .pill{font-family:'JetBrains Mono',monospace; font-size:13px; font-weight:600; color:#a9b6cc;
+        background:rgba(255,255,255,.06); border:1px solid rgba(255,255,255,.1); border-radius:999px;
+        padding:8px 16px;}
+    .pill b{color:#fff; font-weight:700;}
+
+    /* ---------- CARDS ---------- */
+    .section{max-width:1040px; margin:0 auto; padding:0 32px;}
+    .deck{margin-top:-56px; position:relative; z-index:5; display:grid; gap:22px;
+        grid-template-columns:repeat(3,1fr);}
+    .card{
+        background:var(--bg); border:1px solid var(--line); border-radius:20px; padding:30px 28px 26px;
+        box-shadow:0 12px 40px rgba(15,23,42,.10); display:flex; flex-direction:column;
+        transition:transform .18s ease, box-shadow .18s ease, border-color .18s ease;
+    }
+    .card:hover{transform:translateY(-5px); box-shadow:0 22px 60px rgba(15,23,42,.16); border-color:#cdd8ea;}
+    .card .ic{width:52px; height:52px; border-radius:14px; display:flex; align-items:center; justify-content:center;
+        margin-bottom:20px; flex-shrink:0;}
+    .card .ic svg{width:26px; height:26px; display:block;}
+    .ic.app{background:linear-gradient(135deg,#eff6ff,#e0e7ff);}
+    .ic.doc{background:linear-gradient(135deg,#ecfdf5,#d1fae5);}
+    .ic.pres{background:linear-gradient(135deg,#faf5ff,#ede9fe);}
+    .card .ktag{font-family:'JetBrains Mono',monospace; font-size:12px; font-weight:700; letter-spacing:.08em;
+        text-transform:uppercase; margin-bottom:8px;}
+    .ktag.app{color:var(--primary);} .ktag.doc{color:var(--green);} .ktag.pres{color:var(--accent);}
+    .card h3{font-size:23px; font-weight:800; color:var(--ink); letter-spacing:-0.01em; margin-bottom:9px;}
+    .card p{font-size:15px; color:var(--muted); line-height:1.5; flex:1;}
+    .card .go{margin-top:22px; display:inline-flex; align-items:center; gap:8px; align-self:flex-start;
+        font-size:15px; font-weight:700; color:#fff; background:var(--primary); padding:11px 20px; border-radius:11px;
+        transition:background .15s ease;}
+    .card .go:hover{background:var(--primary-dark);}
+    .card .go svg{width:16px; height:16px;}
+    .card.is-app{border-color:#bfd3f6;}
+    .card.is-app .go{background:var(--primary);}
+    .badge-main{display:inline-block; font-size:11px; font-weight:700; color:var(--primary); background:var(--primary-light);
+        border-radius:6px; padding:2px 8px; margin-left:8px; vertical-align:middle; letter-spacing:.03em;}
+
+    /* ---------- ABOUT ---------- */
+    .about{max-width:1040px; margin:80px auto 0; padding:0 32px;}
+    .about h2{font-size:30px; font-weight:800; color:var(--ink); letter-spacing:-0.02em; margin-bottom:10px;}
+    .about .lead{font-size:18px; color:var(--muted); max-width:760px; line-height:1.55;}
+    .feat{display:grid; grid-template-columns:repeat(3,1fr); gap:22px; margin-top:36px;}
+    .fc{background:var(--bg); border:1px solid var(--line); border-radius:16px; padding:24px;}
+    .fc .fi{font-size:26px; margin-bottom:12px;}
+    .fc h4{font-size:17px; font-weight:800; color:var(--ink); margin-bottom:6px;}
+    .fc p{font-size:14.5px; color:var(--muted); line-height:1.5;}
+
+    /* ---------- FOOTER ---------- */
+    footer{max-width:1040px; margin:80px auto 0; padding:34px 32px 56px; border-top:1px solid var(--line);
+        display:flex; align-items:center; justify-content:space-between; gap:20px; flex-wrap:wrap;}
+    footer .fbrand{display:flex; align-items:center; gap:12px;}
+    footer .fbrand svg{width:30px; height:30px;}
+    footer .fbrand .ft{font-size:15px; font-weight:800; color:var(--ink); letter-spacing:.03em;}
+    footer .fbrand .fv{font-family:'JetBrains Mono',monospace; font-size:12px; color:var(--faint); margin-top:2px;}
+    footer .fcredit{font-size:13px; color:var(--muted); text-align:right;}
+    footer .fcredit b{color:var(--body); font-weight:700;}
+
+    @media (max-width:860px){
+        .deck{grid-template-columns:1fr; margin-top:-40px;}
+        .feat{grid-template-columns:1fr;}
+        .hero{padding:60px 24px 80px;}
+        .lockup{margin-bottom:44px;}
+        footer{flex-direction:column; align-items:flex-start;}
+        footer .fcredit{text-align:left;}
+    }
+</style>
+</head>
+<body>
+
+<!-- ============ HERO ============ -->
+<div class="hero">
+    <div class="wrap">
+        <div class="lockup">
+            <svg viewBox="17 17 86 86" fill="none" xmlns="http://www.w3.org/2000/svg"><defs><linearGradient id="hMark" x1="17" y1="103" x2="103" y2="17" gradientUnits="userSpaceOnUse"><stop stop-color="#3b82f6"></stop><stop offset="1" stop-color="#34d399"></stop></linearGradient></defs><path d="M17.00 103.00 L17.00 80.48 Q17.00 70.15 27.33 70.15 L33.71 70.15 L33.71 103.00 Z" fill="url(#hMark)"></path><path d="M40.10 103.00 L40.10 68.05 Q40.10 57.73 50.42 57.73 L56.81 57.73 L56.81 103.00 Z" fill="url(#hMark)"></path><path d="M63.19 103.00 L63.19 50.93 Q63.19 40.60 73.52 40.60 L79.90 40.60 L79.90 103.00 Z" fill="url(#hMark)"></path><path d="M86.29 103.00 L86.29 27.33 Q86.29 17.00 96.62 17.00 L103.00 17.00 L103.00 103.00 Z" fill="url(#hMark)"></path></svg>
+            <div class="wm"><span class="nm">FIN ANALYST</span><span class="tag">FINANCIAL ASSESSMENT &amp; RISK MODEL</span></div>
+        </div>
+        <h1>Оценка финансового здоровья компании <em>за один клик</em></h1>
+        <p class="sub">Браузерный инструмент анализа бухгалтерской отчётности: финансовые коэффициенты, интегральный балл FARM‑Score, автоматические рекомендации и сценарное моделирование.</p>
+        <div class="pills">
+            <span class="pill">Версия приложения <b>v2.4.8</b></span>
+            <span class="pill">Модель <b>FARM‑Score v3.9</b></span>
+            <span class="pill"><b>100%</b> в браузере · данные не покидают ПК</span>
+        </div>
+    </div>
+</div>
+
+<!-- ============ CARDS ============ -->
+<div class="section">
+    <div class="deck">
+
+        <a class="card" href="FinAnalyst_Presentation%20(standalone).html">
+            <div class="ic pres">
+                <svg viewBox="0 0 24 24" fill="none" stroke="#7c3aed" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"></rect><line x1="8" y1="21" x2="16" y2="21"></line><line x1="12" y1="17" x2="12" y2="21"></line></svg>
+            </div>
+            <div class="ktag pres">Презентация</div>
+            <h3>Презентация продукта</h3>
+            <p>Слайды о ценности и методике: проблема и решение, устройство FARM‑Score, ключевые возможности и бизнес‑выгода. Листается стрелками, экспорт в PDF.</p>
+            <span class="go" style="background:#7c3aed">Открыть презентацию
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></span>
+        </a>
+
+        <a class="card" href="FinAnalyst_UserManual%20(standalone).html">
+            <div class="ic doc">
+                <svg viewBox="0 0 24 24" fill="none" stroke="#059669" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path></svg>
+            </div>
+            <div class="ktag doc">Руководство</div>
+            <h3>Руководство пользователя</h3>
+            <p>Пошаговое руководство для финансиста: загрузка данных, разбор всех восьми вкладок со скриншотами и выносками, словарь терминов и частые вопросы.</p>
+            <span class="go" style="background:#059669">Открыть руководство
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></span>
+        </a>
+
+        <a class="card is-app" href="FinAnalyst_v2.4.8.html">
+            <div class="ic app">
+                <svg viewBox="0 0 24 24" fill="none" stroke="#2563eb" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><line x1="4" y1="20" x2="4" y2="15"></line><line x1="9.33" y1="20" x2="9.33" y2="12"></line><line x1="14.67" y1="20" x2="14.67" y2="9"></line><line x1="20" y1="20" x2="20" y2="5"></line></svg>
+            </div>
+            <div class="ktag app">Приложение</div>
+            <h3>FIN ANALYST<span class="badge-main">v2.4.8</span></h3>
+            <p>Полнофункциональное приложение: загрузка отчётности из ГИР БО, расчёт FARM‑Score, рекомендации, сценарный анализ «что если», сравнение компаний и собственные отраслевые профили.</p>
+            <span class="go">Открыть приложение
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></span>
+        </a>
+
+    </div>
+</div>
+
+<!-- ============ ABOUT ============ -->
+<div class="about">
+    <h2>Что такое FARM‑Score</h2>
+    <p class="lead">Интегральная модель оценки финансового состояния компании по официальной отчётности. Один балл от 0 до 100 и грейд от A до F складываются из пяти направлений анализа.</p>
+    <div class="feat">
+        <div class="fc"><div class="fi">🎯</div><h4>Объективно</h4><p>Единая воспроизводимая методика. Один и тот же файл всегда даёт один и тот же балл — без субъективизма.</p></div>
+        <div class="fc"><div class="fi">🔍</div><h4>Прозрачно</h4><p>Каждый балл раскладывается до конкретного показателя и его вклада. Методика открыта и описана внутри приложения.</p></div>
+        <div class="fc"><div class="fi">🔒</div><h4>Конфиденциально</h4><p>Все расчёты идут в браузере. Загруженная отчётность никуда не отправляется и стирается при закрытии вкладки.</p></div>
+    </div>
+</div>
+
+<!-- ============ FOOTER ============ -->
+<footer>
+    <div class="fbrand">
+        <svg viewBox="17 17 86 86" fill="none" xmlns="http://www.w3.org/2000/svg"><defs><linearGradient id="fMark" x1="17" y1="103" x2="103" y2="17" gradientUnits="userSpaceOnUse"><stop stop-color="#3b82f6"></stop><stop offset="1" stop-color="#34d399"></stop></linearGradient></defs><path d="M17.00 103.00 L17.00 80.48 Q17.00 70.15 27.33 70.15 L33.71 70.15 L33.71 103.00 Z" fill="url(#fMark)"></path><path d="M40.10 103.00 L40.10 68.05 Q40.10 57.73 50.42 57.73 L56.81 57.73 L56.81 103.00 Z" fill="url(#fMark)"></path><path d="M63.19 103.00 L63.19 50.93 Q63.19 40.60 73.52 40.60 L79.90 40.60 L79.90 103.00 Z" fill="url(#fMark)"></path><path d="M86.29 103.00 L86.29 27.33 Q86.29 17.00 96.62 17.00 L103.00 17.00 L103.00 103.00 Z" fill="url(#fMark)"></path></svg>
+        <div>
+            <div class="ft">FIN ANALYST</div>
+            <div class="fv">v2.4.8 · FARM‑Score v3.9</div>
+        </div>
+    </div>
+    <div class="fcredit">Powered by <b>Gadalov BI</b> · AI‑Augmented Solutions<br>© 2026 · Все расчёты выполняются локально в браузере</div>
+</footer>
+
+</body>
+</html>
