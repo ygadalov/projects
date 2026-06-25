@@ -786,7 +786,7 @@
         .sc-infl-delta { font-family: 'JetBrains Mono', monospace; font-size: 12px; font-weight: 700; }
         .sc-infl-bar { height: 5px; border-radius: 3px; background: var(--border-light); margin-top: 8px; overflow: visible; position: relative; }
         .sc-infl-bar > .sc-fact-tick { position: absolute; top: -2px; width: 2px; height: 9px; background: var(--text-muted); opacity: .5; }
-        .sc-infl-bar > .sc-fill { height: 100%; border-radius: 3px; transition: width .3s, background .3s; }
+        .sc-infl-bar > .sc-fill { position: absolute; left: 0; top: 0; bottom: 0; height: 100%; border-radius: 3px; transition: width .3s, background .3s; }
         .sc-infl-cap { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .5px; color: var(--text-muted); margin-bottom: 8px; }
 
         .sc-work { display: grid; grid-template-columns: 1fr; gap: 16px; align-items: start; }
@@ -1310,6 +1310,10 @@
     </style>
 </head>
 <body>
+
+<template id="__bundler_thumbnail">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><linearGradient id="tbg" x1="0" y1="100" x2="100" y2="0" gradientUnits="userSpaceOnUse"><stop stop-color="#3b82f6"></stop><stop offset="1" stop-color="#34d399"></stop></linearGradient></defs><rect width="100" height="100" rx="20" fill="#0b1220"></rect><path d="M30 70 L30 62 Q30 59 33 59 L37 59 L37 70 Z" fill="url(#tbg)"></path><path d="M44 70 L44 53 Q44 50 47 50 L51 50 L51 70 Z" fill="url(#tbg)"></path><path d="M58 70 L58 44 Q58 41 61 41 L65 41 L65 70 Z" fill="url(#tbg)"></path><path d="M72 70 L72 33 Q72 30 75 30 L79 30 L79 70 Z" fill="url(#tbg)"></path></svg>
+</template>
 
 <!-- Контейнер для стэка уведомлений -->
 <div class="notification-stack" id="notification-stack"></div>
@@ -5593,7 +5597,9 @@ function renderMethodology() {
 // ══════════════════════════════════════════════
 // EVENT BINDINGS (replacing inline handlers)
 // ══════════════════════════════════════════════
-document.addEventListener('DOMContentLoaded', () => {
+// v2.4.8: запуск инициализации устойчив к случаю, когда DOM уже загружен
+// (важно для автономной standalone-сборки: контент вставляется ПОСЛЕ DOMContentLoaded).
+(function(__boot){ if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', __boot); else __boot(); })(() => {
     // v2.2.0: подмешиваем кастомные профили из localStorage в общий реестр
     Object.assign(FARM_PROFILES, loadCustomProfiles());
 
@@ -5724,6 +5730,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // ── Event delegation for dynamically generated elements ──
     document.addEventListener('click', (e) => {
+        if (!(e.target instanceof Element)) return;
         // data-action handlers
         const actionEl = e.target.closest('[data-action]');
         if (actionEl) {
@@ -5813,6 +5820,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // v2.0.5 (#16): клавиатура для раскрывающихся карточек паттернов (Enter/Space)
     document.addEventListener('keydown', (e) => {
         if (e.key !== 'Enter' && e.key !== ' ' && e.key !== 'Spacebar') return;
+        if (!(e.target instanceof Element)) return;
         const header = e.target.closest('.rec-pattern-header[role="button"]');
         if (!header) return;
         e.preventDefault();
@@ -5825,7 +5833,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Profile select + Compare company checkboxes delegation
     document.addEventListener('change', (e) => {
-        if (e.target.classList.contains('profile-select')) {
+        if (!(e.target instanceof Element)) return;
+        if (e.target.classList?.contains('profile-select')) {
             appState.farmProfile = e.target.value;
             _cacheFarmScore.clear();
             _cacheRenderedHtml.clear();
@@ -5833,7 +5842,7 @@ document.addEventListener('DOMContentLoaded', () => {
             else renderDashboard();
         }
         // v2.3.1: выбор компании на вкладке «Сценарий»
-        if (e.target.classList.contains('sc-company-select')) {
+        if (e.target.classList?.contains('sc-company-select')) {
             batchState(() => {
                 appState.currentInn = e.target.value;
                 appState.activeFormId = null;
@@ -5865,10 +5874,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // v2.2.0: клики и ввод в редакторе профилей
     document.addEventListener('click', (e) => {
+        if (!(e.target instanceof Element)) return;
         const t = e.target.closest('#profiles-content [data-pf]');
         if (t) pfHandleAction(t.getAttribute('data-pf'), t);
     });
     document.addEventListener('input', (e) => {
+        if (!(e.target instanceof Element)) return;
         if (e.target.matches('#profiles-content [data-pf-name]')) {
             _pfState.draft.name = e.target.value; pfUpdateSide();
         }
@@ -5876,12 +5887,14 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Sparkline tooltip delegation
     document.addEventListener('mouseenter', (e) => {
-        if (e.target.classList.contains('spark-dot') && e.target.dataset.tip) {
+        if (!(e.target instanceof Element)) return;
+        if (e.target.classList?.contains('spark-dot') && e.target.dataset.tip) {
             showSparkTip(e, e.target.dataset.tip);
         }
     }, true);
     document.addEventListener('mouseleave', (e) => {
-        if (e.target.classList.contains('spark-dot')) {
+        if (!(e.target instanceof Element)) return;
+        if (e.target.classList?.contains('spark-dot')) {
             hideSparkTip();
         }
     }, true);
