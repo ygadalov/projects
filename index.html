@@ -96,6 +96,11 @@
     .fc .fi{font-size:26px; margin-bottom:12px;}
     .fc h4{font-size:17px; font-weight:800; color:var(--ink); margin-bottom:6px;}
     .fc p{font-size:14.5px; color:var(--muted); line-height:1.5;}
+    a.fc.fc-link{display:block; text-decoration:none; cursor:pointer; transition:border-color .15s, box-shadow .15s, transform .15s;}
+    a.fc.fc-link:hover{border-color:#c7b6f5; box-shadow:0 8px 24px rgba(124,58,237,.12); transform:translateY(-2px);}
+    a.fc.fc-link .fc-more{display:inline-flex; align-items:center; gap:5px; margin-top:12px; font-size:13px; font-weight:700; color:var(--accent);}
+    a.fc.fc-link .fc-more svg{transition:transform .15s;}
+    a.fc.fc-link:hover .fc-more svg{transform:translateX(3px);}
 
     /* ---------- FOOTER ---------- */
     footer{max-width:1040px; margin:80px auto 0; padding:34px 32px 56px; border-top:1px solid var(--line);
@@ -183,7 +188,7 @@
     <div class="feat">
         <div class="fc"><div class="fi">🎯</div><h4>Объективно</h4><p>Единая воспроизводимая методика. Один и тот же файл всегда даёт один и тот же балл — без субъективизма.</p></div>
         <div class="fc"><div class="fi">🔍</div><h4>Прозрачно</h4><p>Каждый балл раскладывается до конкретного показателя и его вклада. Методика открыта и описана внутри приложения.</p></div>
-        <div class="fc"><div class="fi">🔒</div><h4>Конфиденциально</h4><p>Все расчёты идут в браузере. Загруженная отчётность никуда не отправляется и стирается при закрытии вкладки.</p></div>
+        <a class="fc fc-link" href="FinAnalyst_SecurityBrief (standalone).html"><div class="fi">🔒</div><h4>Конфиденциально</h4><p>Все расчёты идут в браузере. Загруженная отчётность никуда не отправляется и стирается при закрытии вкладки.</p><span class="fc-more">Справка по безопасности <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></span></a>
     </div>
 </div>
 
