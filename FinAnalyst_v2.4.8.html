@@ -837,12 +837,12 @@
         .sc-drv-name .code { font-family: 'JetBrains Mono', monospace; font-size: 10px; color: var(--text-muted); font-weight: 700; }
         .sc-drv-name .code sub { font-size: 8px; color: var(--purple); font-weight: 700; }
         .sc-slave-tag { font-size: 8px; font-weight: 700; text-transform: uppercase; letter-spacing: .3px; color: var(--purple); background: #ede9fe; padding: 1px 5px; border-radius: 4px; margin-left: 5px; }
-        .sc-drv-val { text-align: right; display: flex; align-items: baseline; gap: 6px; }
+        .sc-drv-val { text-align: right; display: flex; align-items: baseline; justify-content: flex-end; gap: 6px; }
         .sc-drv-abs { font-family: 'JetBrains Mono', monospace; font-size: 12px; font-weight: 700; }
         .sc-drv-abs-input { width: 92px; min-width: 92px; max-width: 168px; box-sizing: border-box; font-family: 'JetBrains Mono', monospace; font-size: 12px; font-weight: 700; text-align: right; padding: 3px 6px; border: 1.5px solid var(--border); border-radius: 6px; }
-        .sc-unit-hint { text-transform: none; letter-spacing: .01em; font-size: 11px; font-weight: 600; color: var(--text-muted); padding-right: 48px; }
+        .sc-unit-hint { text-transform: none; letter-spacing: .01em; font-size: 11px; font-weight: 600; color: var(--text-muted); padding-right: 56px; }
         .sc-drv-abs-input:focus { outline: none; border-color: var(--primary); }
-        .sc-drv-pct { font-family: 'JetBrains Mono', monospace; font-size: 10px; font-weight: 700; padding: 1px 5px; border-radius: 4px; min-width: 42px; text-align: center; }
+        .sc-drv-pct { font-family: 'JetBrains Mono', monospace; font-size: 10px; font-weight: 700; padding: 1px 5px; border-radius: 4px; width: 50px; flex-shrink: 0; box-sizing: border-box; text-align: center; }
         .sc-step { display: flex; align-items: center; gap: 8px; }
         .sc-step-btn { width: 28px; height: 28px; flex-shrink: 0; border-radius: 8px; border: 1px solid var(--border); background: #fff; color: var(--text-secondary); font-size: 17px; font-weight: 700; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: all .12s; user-select: none; line-height: 1; }
         .sc-step-btn:hover { border-color: var(--primary); color: var(--primary); background: var(--primary-light); }
@@ -5205,7 +5205,7 @@ function scUpdate(skipInput){
         const pct=document.querySelector(`#sc-drivers [data-scpct="${code}"]`);
         if(abs)abs.textContent=scFmtRub(SC.cur[code]);
         if(inp && code!==skipInput && document.activeElement!==inp){ inp.value=scFmtInput(SC.cur[code]); scSizeInput(inp); }
-        if(pct){ const f=SC.fact[code]; const base=Math.abs(f); const p=(base!==0)?Math.round((SC.cur[code]-f)/base*100):null; pct.textContent=(p===null)?'—':((p>0?'+':'')+p+'%'); pct.style.background=(p===null||p===0)?'#f1f5f9':(p>0?'#dbeafe':'#fee2e2'); pct.style.color=(p===null||p===0)?'var(--text-muted)':(p>0?'var(--primary-dark)':'#dc2626'); }
+        if(pct){ const f=SC.fact[code]; const base=Math.abs(f); const p=(base!==0)?Math.round((SC.cur[code]-f)/base*100):null; const ptxt=(p===null)?'—':(p>999?'>+999%':(p<-999?'<−999%':((p>0?'+':'')+p+'%'))); pct.textContent=ptxt; pct.style.background=(p===null||p===0)?'#f1f5f9':(p>0?'#dbeafe':'#fee2e2'); pct.style.color=(p===null||p===0)?'var(--text-muted)':(p>0?'var(--primary-dark)':'#dc2626'); }
         // bipolar track — направление от факта по |факт| («+» всегда вправо)
         const f=SC.fact[code];
         const base=Math.abs(f);
