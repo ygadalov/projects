@@ -828,7 +828,8 @@
         .sc-lk-text { font-size: 11px; color: var(--text-secondary); line-height: 1.45; }
         .sc-lk-text b { color: var(--text); font-weight: 700; }
 
-        .sc-drv-form { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: .5px; color: var(--text-muted); padding: 14px 18px 4px; display: flex; align-items: center; gap: 7px; }
+        .sc-drv-form { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: .5px; color: var(--text-muted); padding: 14px 18px 4px; display: flex; align-items: center; justify-content: space-between; gap: 7px; }
+        .sc-drv-form > span:first-child { display: inline-flex; align-items: center; gap: 7px; }
         .sc-drv-form .dot { width: 8px; height: 8px; border-radius: 2px; }
         .sc-drv { padding: 8px 18px 11px; border-bottom: 1px solid var(--border-light); }
         .sc-drv-top { display: flex; align-items: baseline; justify-content: space-between; gap: 8px; margin-bottom: 6px; }
@@ -839,6 +840,7 @@
         .sc-drv-val { text-align: right; display: flex; align-items: baseline; gap: 6px; }
         .sc-drv-abs { font-family: 'JetBrains Mono', monospace; font-size: 12px; font-weight: 700; }
         .sc-drv-abs-input { width: 92px; min-width: 92px; max-width: 168px; box-sizing: border-box; font-family: 'JetBrains Mono', monospace; font-size: 12px; font-weight: 700; text-align: right; padding: 3px 6px; border: 1.5px solid var(--border); border-radius: 6px; }
+        .sc-unit-hint { text-transform: none; letter-spacing: .01em; font-size: 11px; font-weight: 600; color: var(--text-muted); padding-right: 48px; }
         .sc-drv-abs-input:focus { outline: none; border-color: var(--primary); }
         .sc-drv-pct { font-family: 'JetBrains Mono', monospace; font-size: 10px; font-weight: 700; padding: 1px 5px; border-radius: 4px; min-width: 42px; text-align: center; }
         .sc-step { display: flex; align-items: center; gap: 8px; }
@@ -5061,8 +5063,9 @@ function scDrvRow(code,label){
 
 function scBuildDrivers(){
     let html='';
-    SC_DRIVERS.forEach(grp=>{
-        html += `<div class="sc-drv-form"><span class="dot" style="background:${SC_FORM_COLOR[grp.form]}"></span>${grp.form} (Ф${grp.fn})</div>`;
+    SC_DRIVERS.forEach((grp,gi)=>{
+        const unit = gi===0 ? `<span class="sc-unit-hint">значения в тыс. руб.</span>` : '';
+        html += `<div class="sc-drv-form"><span><span class="dot" style="background:${SC_FORM_COLOR[grp.form]}"></span>${grp.form} (Ф${grp.fn})</span>${unit}</div>`;
         if(grp.form==='ОДДС' && SC.ocfPresent){
             // OCF — расчётный итог; кликабельный заголовок раскрывает компоненты (как «Пороги» в Профилях)
             html += `<div class="sc-ocf-summary ${SC.ocfExpanded?'open':''}" data-action="scenario-ocf-toggle" role="button" tabindex="0" aria-expanded="${SC.ocfExpanded}">
