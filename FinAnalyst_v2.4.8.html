@@ -122,7 +122,6 @@
             overflow: hidden; max-height: 80px;
             transition: max-height .3s ease, padding .3s ease, opacity .25s ease .08s, border-color .3s ease;
         }
-        .sidebar-footer .sf-version { line-height: 1; }
         .sidebar-footer .sf-credit {
             font-size: 9px; line-height: 1.3; color: #64748b; letter-spacing: 0.2px;
             white-space: nowrap; text-align: center;
@@ -358,8 +357,6 @@
         }
         .btn:hover { filter: brightness(1.1); transform: translateY(-1px); }
         .btn:active { transform: translateY(0); }
-        .btn-outline { background: var(--card); color: var(--text); border: 1px solid var(--border); }
-        .btn-outline:hover { border-color: var(--primary); color: var(--primary); }
         .btn-export { background: var(--success); }
         .btn:disabled { background: #cbd5e1; cursor: not-allowed; opacity: 0.6; transform: none; }
         .btn:disabled::after { content: none; }
@@ -555,12 +552,12 @@
         .compare-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px; padding-bottom: 10px; border-bottom: 1px solid var(--border-light); }
         .compare-company-name { font-size: 14px; font-weight: 700; color: var(--text); max-width: 240px; line-height: 1.3; }
         .compare-badge { padding: 5px 12px; border-radius: 8px; font-size: 12px; font-weight: 700; font-family: 'JetBrains Mono', monospace; }
-        .cmp-neg-cap { display: inline-flex; align-items: center; gap: 3px; margin-top: 4px; padding: 2px 7px; border-radius: 5px; background: #fef2f2; border: 1px solid #fecaca; color: #b91c1c; font-size: 10px; font-weight: 700; white-space: nowrap; }
+        .cmp-neg-cap { position: relative; display: inline-flex; align-items: center; gap: 3px; margin-top: 4px; padding: 2px 7px; border-radius: 5px; background: #fef2f2; border: 1px solid #fecaca; color: #b91c1c; font-size: 10px; font-weight: 700; white-space: nowrap; cursor: help; }
         .cmp-neg-cap svg { flex-shrink: 0; }
+        .cmp-neg-cap:hover .sc-tip, .cmp-neg-cap:focus .sc-tip, .cmp-neg-cap:focus-visible .sc-tip, .cmp-neg-cap.show .sc-tip { opacity: 1; transform: translateX(calc(-50% + var(--tip-dx, 0px))) translateY(0); pointer-events: auto; }
         .compare-metric { display: flex; justify-content: space-between; align-items: center; padding: 5px 0; font-size: 12px; }
         .compare-metric .cm-label { color: var(--text-secondary); font-weight: 500; }
         .compare-metric .cm-value { font-weight: 700; font-family: 'JetBrains Mono', monospace; }
-        .compare-table-wrap { overflow-x: auto; }
         .compare-table { width: 100%; border-collapse: collapse; min-width: 600px; }
         .compare-table th { background: #f8fafc; padding: 10px 12px; border-bottom: 2px solid var(--border); font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.3px; color: var(--text-secondary); text-align: center; position: sticky; top: 0; }
         .compare-table th:first-child { text-align: left; }
@@ -631,9 +628,6 @@
         .pf-btn.primary:hover { background: var(--primary-dark); }
         .pf-btn.primary:disabled { background: #cbd5e1; border-color: #cbd5e1; color: #fff; cursor: not-allowed; }
         .pf-btn.danger:hover { border-color: var(--danger); color: var(--danger); background: #fef2f2; }
-
-        .pf-readonly-note { display: flex; align-items: center; gap: 8px; padding: 10px 20px; background: #fffbeb; border-bottom: 1px solid #fde68a; font-size: 12px; color: #92400e; }
-        .pf-readonly-note svg { flex-shrink: 0; }
 
         .pf-body { display: grid; grid-template-columns: 1fr; }
         @media (min-width: 960px) { .pf-body { grid-template-columns: 1fr 360px; } }
@@ -828,11 +822,12 @@
         .sc-lk-info { position: relative; display: inline-flex; align-items: center; justify-content: center; width: 20px; height: 20px; margin-left: -3px; color: var(--text-muted); cursor: help; flex-shrink: 0; transition: color .14s; }
         .sc-lk-info svg { display: block; }
         .sc-lk-info:hover, .sc-lk-info:focus-visible { border-color: var(--purple); color: var(--purple); outline: none; }
-        .sc-tip { position: absolute; bottom: calc(100% + 9px); left: 50%; transform: translateX(calc(-50% + var(--tip-dx, 0px))) translateY(4px); width: 268px; max-width: 72vw; background: #1e293b; color: #e2e8f0; font-size: 11.5px; font-weight: 500; font-style: normal; line-height: 1.5; letter-spacing: 0; text-transform: none; padding: 9px 11px; border-radius: 8px; box-shadow: 0 8px 22px rgba(15,23,42,.3); opacity: 0; pointer-events: none; transition: opacity .15s, transform .15s; z-index: 60; text-align: left; }
+        .sc-tip { position: absolute; bottom: calc(100% + 9px); left: 50%; transform: translateX(calc(-50% + var(--tip-dx, 0px))) translateY(4px); width: 268px; max-width: 72vw; white-space: normal; background: #1e293b; color: #e2e8f0; font-size: 11.5px; font-weight: 500; font-style: normal; line-height: 1.5; letter-spacing: 0; text-transform: none; padding: 9px 11px; border-radius: 8px; box-shadow: 0 8px 22px rgba(15,23,42,.3); opacity: 0; pointer-events: none; transition: opacity .15s, transform .15s; z-index: 60; text-align: left; }
         .sc-tip b { color: #fff; font-weight: 700; }
         .sc-tip::after { content: ''; position: absolute; top: 100%; left: 50%; transform: translateX(calc(-50% - var(--tip-dx, 0px))); border: 6px solid transparent; border-top-color: #1e293b; }
         .sc-lk-info:hover .sc-tip, .sc-lk-info:focus .sc-tip, .sc-lk-info:focus-visible .sc-tip, .sc-lk-info.show .sc-tip { opacity: 1; transform: translateX(calc(-50% + var(--tip-dx, 0px))) translateY(0); pointer-events: auto; }
         .sc-head-ctrls { display: flex; align-items: center; gap: 9px; }
+        .sc-mode-info:hover, .sc-mode-info:focus-visible { border-color: var(--primary); color: var(--primary); }
         /* режим-иконка в шапке: подсказка раскрывается вниз, правый край у иконки (не уходит за экран) */
         .sc-mode-info .sc-tip { top: calc(100% + 9px); bottom: auto; left: auto; right: -6px; transform: translateX(var(--tip-dx, 0px)) translateY(-4px); }
         .sc-mode-info .sc-tip::after { top: auto; bottom: 100%; left: auto; right: 9px; transform: translateX(calc(-1 * var(--tip-dx, 0px))); border-top-color: transparent; border-bottom-color: #1e293b; }
@@ -973,12 +968,6 @@
         @keyframes loaderSlide {
             0% { transform: translateX(-100%); }
             100% { transform: translateX(400%); }
-        }
-
-        /* ═══ YEAR BADGE ═══ */
-        .year-badge { 
-            font-size: 11px; font-weight: 700; color: var(--primary); background: var(--primary-light); 
-            padding: 2px 8px; border-radius: 6px; margin-left: 4px;
         }
 
         /* ═══ HOVER BUTTONS (replacing inline onmouseenter/onmouseleave) ═══ */
@@ -1214,9 +1203,6 @@
             font-size: 11px; color: var(--text-muted); line-height: 1.5;
             padding: 0 4px 0 24px; margin-bottom: 16px;
         }
-        .rec-export-bar {
-            display: flex; align-items: center; gap: 8px; justify-content: flex-end; margin-bottom: 16px;
-        }
 
         /* ═══════════════════════════════════════════════════════════════
            v2.0: PRINT STYLES (ported from v1.5 — проверены на реальных данных)
@@ -1233,20 +1219,20 @@
 
             .sidebar, .overlay, #mobile-menu-btn, .mobile-header,
             .back-to-top,
-            .topbar-actions, #upload-zone, #empty-state, #loader,
+            #upload-zone, #empty-state, #loader,
             .notification-stack, .year-chips, .year-chips-label,
             .filters, .year-reset, #btn-upload,
             #btn-export, #btn-pdf, #btn-meth-pdf,
             .company-select, #company-select, .compare-selector,
             .org-actions, #confirm-modal,
             .profile-select, .sidebar-footer,
-            .btn-profile-link, .btn-meth-link, .scenario-link-btn,
+            .btn-profile-link, .btn-meth-link,
             .okved-hint, .sc-preset-bar, .meth-toc,
             .compare-profile-bar, .rec-filter-reset, .sidebar-collapse-btn,
             .sc-link-row, .sc-step, .sc-org-ctrls, .sc-company-select,
             .sc-head-ctrls,
             [data-action="print-tab"],
-            #sidebar-close-btn, .nav-item, .rec-export-bar, .scroll-hint,
+            #sidebar-close-btn, .nav-item,
             .tab-btn:not(.active),
             [data-action="print-tab"], [data-action="export-meth-pdf"], [data-action="close-notification"] {
                 display: none !important;
@@ -1272,12 +1258,6 @@
             .main-wrapper {
                 margin-left: 0 !important; width: 100% !important;
                 max-width: 100% !important; padding: 0 !important;
-            }
-            .top-bar {
-                position: static !important;
-                border-bottom: 1.5pt solid #000 !important;
-                padding: 0 0 6pt 0 !important; margin-bottom: 10pt;
-                background: transparent !important; box-shadow: none !important;
             }
             #page-title {
                 font-size: 18pt !important; font-weight: 800; color: #000 !important;
@@ -4308,7 +4288,7 @@ function renderCompare() {
         const negCap = cd.metrics && cd.metrics.Equity !== null && cd.metrics.Equity <= 0;
         html += `<div class="compare-company-card ${cd.inn === appState.currentInn ? 'highlight' : ''}">
             <div class="compare-header">
-                <div class="compare-company-name">${escapeHtml(cd.comp.info.name)}${negCap ? ' <span class="cmp-neg-cap" title="Отрицательный собственный капитал (стр.1300≤0): D/E и ROE не рассчитываются, итоговый балл ограничен потолком E (методика §4.3)"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>Отриц. капитал</span>' : ''}</div>
+                <div class="compare-company-name">${escapeHtml(cd.comp.info.name)}${negCap ? ' <span class="cmp-neg-cap" tabindex="0" role="button" aria-label="Отрицательный капитал"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>Отриц. капитал<span class="sc-tip"><b>Отрицательный капитал.</b> Собственный капитал ≤ 0 (стр.1300≤0): D/E и ROE не рассчитываются, итоговый балл ограничен потолком E (методика §4.3).</span></span>' : ''}</div>
                 ${gr ? `<div class="compare-badge" style="background:${gr.bg};color:${gr.color}">${gr.grade} ${cd.farmResult.finalScore.toFixed(0)}</div>` : '<div class="compare-badge" style="background:#f1f5f9;color:#94a3b8">—</div>'}
             </div>
             <div class="compare-metric"><span class="cm-label">ИНН</span><span class="cm-value" style="color:var(--text-muted)">${cd.inn}</span></div>`;
@@ -5984,18 +5964,18 @@ function renderMethodology() {
     }
     document.addEventListener('mouseover', (e) => {
         if (!(e.target instanceof Element)) return;
-        const info = e.target.closest('.sc-lk-info');
+        const info = e.target.closest('.sc-lk-info, .cmp-neg-cap');
         if (info) scPositionTip(info);
     });
     document.addEventListener('focusin', (e) => {
         if (!(e.target instanceof Element)) return;
-        const info = e.target.closest('.sc-lk-info');
+        const info = e.target.closest('.sc-lk-info, .cmp-neg-cap');
         if (info) scPositionTip(info);
     });
     document.addEventListener('click', (e) => {
         if (!(e.target instanceof Element)) return;
-        const info = e.target.closest('.sc-lk-info');
-        document.querySelectorAll('.sc-lk-info.show').forEach(el => { if (el !== info) el.classList.remove('show'); });
+        const info = e.target.closest('.sc-lk-info, .cmp-neg-cap');
+        document.querySelectorAll('.sc-lk-info.show, .cmp-neg-cap.show').forEach(el => { if (el !== info) el.classList.remove('show'); });
         if (info) { e.preventDefault(); const willShow = !info.classList.contains('show'); info.classList.toggle('show'); if (willShow) scPositionTip(info); }
     });
 
