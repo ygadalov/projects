@@ -840,7 +840,7 @@
         .sc-drv-val { text-align: right; display: flex; align-items: baseline; justify-content: flex-end; gap: 6px; }
         .sc-drv-abs { font-family: 'JetBrains Mono', monospace; font-size: 12px; font-weight: 700; }
         .sc-drv-abs-input { width: 92px; min-width: 92px; max-width: 168px; box-sizing: border-box; font-family: 'JetBrains Mono', monospace; font-size: 12px; font-weight: 700; text-align: right; padding: 3px 6px; border: 1.5px solid var(--border); border-radius: 6px; }
-        .sc-unit-hint { text-transform: none; letter-spacing: .01em; font-size: 11px; font-weight: 600; color: var(--text-muted); padding-right: 56px; }
+        .sc-unit-hint { flex: 1; text-align: right; text-transform: none; letter-spacing: .01em; font-size: 11px; font-weight: 600; color: var(--text-muted); padding-right: 0; }
         .sc-drv-abs-input:focus { outline: none; border-color: var(--primary); }
         .sc-drv-pct { font-family: 'JetBrains Mono', monospace; font-size: 10px; font-weight: 700; padding: 1px 5px; border-radius: 4px; width: 50px; flex-shrink: 0; box-sizing: border-box; text-align: center; }
         .sc-step { display: flex; align-items: center; gap: 8px; }
@@ -2366,7 +2366,14 @@ async function processFiles(files) {
         invalidateCaches();
         updateCompanyDropdown();
         if (appState.currentInn) { 
-            initYearSelection(); renderDashboard();
+            initYearSelection();
+            // v2.4.8: перерисовать АКТИВНУЮ вкладку, а не только дашборд
+            // (иначе при загрузке прямо со «Сценария»/«Профилей» контент не появлялся
+            //  до ручного переключения вкладок).
+            if (appState.activeMenu === 'scenario') renderScenario();
+            else if (appState.activeMenu === 'profiles') renderProfilesTab();
+            else if (appState.activeMenu === 'methodology') renderMethodology();
+            else renderDashboard();
             // Build summary of ALL loaded companies
             const allInns = Object.keys(appState.companies);
             const lines = allInns.map(inn => {
