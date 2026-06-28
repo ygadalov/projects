@@ -1,4 +1,13 @@
 <!DOCTYPE html>
+<!--
+  FIN ANALYST — FARM-Score (Financial Assessment & Risk Model)
+  © 2026 Gadalov Yuriy / Gadalov BI. Все права защищены.
+  Методика расчёта FARM-Score (формулы, веса категорий, пороги грейдов A–F,
+  правила-исключения) является интеллектуальной собственностью правообладателя.
+  Копирование, модификация и распространение методики без письменного
+  разрешения не допускаются.
+  Целостность ядра методики проверяется внутренним само-контролем.
+-->
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
@@ -6057,6 +6066,110 @@ window.__FA_TEST_API = {
     _cacheRenderedHtml,
     invalidateCaches
 };
+</script>
+<!-- ═══ Само-проверка целостности ядра FARM-Score (v2.4.8a) ═══
+     Чистый JS-SHA-256 (без внешних зависимостей, работает офлайн через file://).
+     Хеширует ТОЛЬКО исходный текст функций алгоритма (normalize, gradeForScore,
+     calcFarmScoreBase, calcFarmScore) — правки интерфейса/текстов его не сбивают.
+     При расхождении с эталоном показывает мягкое предупреждение. -->
+<script>
+(function () {
+  // Минимальный SHA-256 (Geraint Luff, MIT) — пригоден офлайн, не требует crypto.subtle.
+  function sha256(ascii) {
+    function rightRotate(value, amount) { return (value >>> amount) | (value << (32 - amount)); }
+    var mathPow = Math.pow, maxWord = mathPow(2, 32), i, j, result = '';
+    var words = [], asciiBitLength = ascii.length * 8;
+    var hash = sha256.h = sha256.h || [], k = sha256.k = sha256.k || [], primeCounter = k.length;
+    var isComposite = {};
+    for (var candidate = 2; primeCounter < 64; candidate++) {
+      if (!isComposite[candidate]) {
+        for (i = 0; i < 313; i += candidate) { isComposite[i] = candidate; }
+        hash[primeCounter] = (mathPow(candidate, 0.5) * maxWord) | 0;
+        k[primeCounter++] = (mathPow(candidate, 1 / 3) * maxWord) | 0;
+      }
+    }
+    ascii += '\x80';
+    while (ascii.length % 64 - 56) ascii += '\x00';
+    for (i = 0; i < ascii.length; i++) {
+      j = ascii.charCodeAt(i);
+      if (j >> 8) return;
+      words[i >> 2] |= j << ((3 - i) % 4) * 8;
+    }
+    words[words.length] = ((asciiBitLength / maxWord) | 0);
+    words[words.length] = (asciiBitLength);
+    for (j = 0; j < words.length;) {
+      var w = words.slice(j, j += 16), oldHash = hash;
+      hash = hash.slice(0, 8);
+      for (i = 0; i < 64; i++) {
+        var w15 = w[i - 15], w2 = w[i - 2];
+        var a = hash[0], e = hash[4];
+        var temp1 = hash[7]
+          + (rightRotate(e, 6) ^ rightRotate(e, 11) ^ rightRotate(e, 25))
+          + ((e & hash[5]) ^ ((~e) & hash[6]))
+          + k[i]
+          + (w[i] = i < 16 ? w[i] : (
+              w[i - 16]
+              + (rightRotate(w15, 7) ^ rightRotate(w15, 18) ^ (w15 >>> 3))
+              + w[i - 7]
+              + (rightRotate(w2, 17) ^ rightRotate(w2, 19) ^ (w2 >>> 10))
+            ) | 0);
+        var temp2 = (rightRotate(a, 2) ^ rightRotate(a, 13) ^ rightRotate(a, 22))
+          + ((a & hash[1]) ^ (a & hash[2]) ^ (hash[1] & hash[2]));
+        hash = [(temp1 + temp2) | 0].concat(hash);
+        hash[4] = (hash[4] + temp1) | 0;
+      }
+      for (i = 0; i < 8; i++) { hash[i] = (hash[i] + oldHash[i]) | 0; }
+    }
+    for (i = 0; i < 8; i++) {
+      for (j = 3; j + 1; j--) {
+        var b = (hash[i] >> (j * 8)) & 255;
+        result += ((b < 16) ? 0 : '') + b.toString(16);
+      }
+    }
+    return result;
+  }
+
+  // Эталонный хеш ядра. Пересчитывается ТОЛЬКО при официальном релизе методики.
+  // '__PLACEHOLDER__' = проверка выключена (предупреждение не показывается).
+  var EXPECTED_CORE_HASH = '49d6fb33d0ce3c339b8a217ae85d9649ab7e333aa53bf6c91d818c41f4582966';
+
+  function coreSource() {
+    try {
+      var s = [normalize, gradeForScore, calcFarmScoreBase, calcFarmScore]
+        .map(function (f) { return f.toString(); }).join('\n');
+      // UTF-8 → байтовая строка (исходник содержит кириллицу, символы >255).
+      return unescape(encodeURIComponent(s));
+    } catch (e) { return null; }
+  }
+
+  function showWarn(h) {
+    var bar = document.createElement('div');
+    bar.setAttribute('role', 'alert');
+    bar.style.cssText = 'position:fixed;left:50%;bottom:18px;transform:translateX(-50%);z-index:99999;max-width:90vw;background:#7f1d1d;color:#fff;font:600 13px/1.45 Manrope,system-ui,sans-serif;padding:11px 16px;border-radius:10px;box-shadow:0 8px 28px rgba(0,0,0,.35);cursor:pointer;';
+    bar.textContent = '⚠ Внимание: методика FARM-Score отличается от эталонной версии (core ' + h + '). Результаты могут быть недостоверны. (нажмите, чтобы скрыть)';
+    bar.addEventListener('click', function () { bar.remove(); });
+    document.body.appendChild(bar);
+  }
+
+  // Скрытый доступ к хешу ядра для разработчика (при релизе методики).
+  // Ничего не логируется автоматически — вызвать вручную в консоли: __fcore()
+  try {
+    Object.defineProperty(window, '__fcore', {
+      value: function () { var s = coreSource(); return s === null ? null : sha256(s); },
+      enumerable: false, writable: false, configurable: false
+    });
+  } catch (e) {}
+
+  function run() {
+    var src = coreSource();
+    if (src === null) return;
+    var full = sha256(src);
+    if (EXPECTED_CORE_HASH !== '__PLACEHOLDER__' && full !== EXPECTED_CORE_HASH) showWarn(full.slice(0, 6));
+  }
+
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', run);
+  else run();
+})();
 </script>
 </body>
 </html>
