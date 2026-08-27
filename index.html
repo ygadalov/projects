@@ -26,7 +26,7 @@
     .hero{
         position:relative; overflow:hidden;
         background:radial-gradient(125% 125% at 82% 8%, #16223a 0%, #0b1220 52%, #070b13 100%);
-        color:#fff; padding:52px 32px 80px;
+        color:#fff; padding:84px 32px 96px;
     }
     .hero::after{ /* subtle grid */
         content:''; position:absolute; inset:0; opacity:.4; pointer-events:none;
@@ -35,7 +35,7 @@
     }
     .wrap{max-width:1040px; margin:0 auto; position:relative; z-index:1;}
 
-    .lockup{display:flex; align-items:flex-start; gap:16px; margin-bottom:34px;}
+    .lockup{display:flex; align-items:flex-start; gap:16px; margin-bottom:64px;}
     .lockup svg{width:48px; height:48px; flex-shrink:0; margin-top:3px;}
     .lockup .wm{display:inline-flex; flex-direction:column;}
     .lockup .nm{font-size:32px; font-weight:800; letter-spacing:.05em; text-transform:uppercase; line-height:1;
@@ -49,14 +49,8 @@
         max-width:880px; padding-bottom:6px;}
     .hero h1 em{font-style:normal; background:linear-gradient(135deg,#60a5fa,#34d399);
         -webkit-background-clip:text; background-clip:text; -webkit-text-fill-color:transparent; color:transparent;}
-    .hero .sub{font-size:clamp(17px,2.3vw,21px); color:#94a3b8; max-width:760px; margin-top:clamp(20px,2.6vw,28px); line-height:1.5;}
-    .hero .pills{display:flex; flex-wrap:wrap; gap:12px; margin-top:18px;}
-    .hero .cta{display:inline-flex; align-items:center; gap:9px; margin-top:24px;
-        font-size:15px; font-weight:700; color:#fff; background:var(--primary);
-        padding:13px 22px; border-radius:12px; white-space:nowrap;
-        box-shadow:0 8px 24px rgba(37,99,235,.35); transition:background .15s ease, transform .15s ease, box-shadow .15s ease;}
-    .hero .cta:hover{background:var(--primary-dark); transform:translateY(-2px); box-shadow:0 12px 30px rgba(37,99,235,.45);}
-    .hero .cta svg{width:16px; height:16px;}
+    .hero .sub{font-size:clamp(17px,2.3vw,22px); color:#94a3b8; max-width:660px; margin-top:clamp(30px,4vw,42px); line-height:1.5;}
+    .hero .pills{display:flex; flex-wrap:wrap; gap:12px; margin-top:38px;}
     .pill{font-family:'JetBrains Mono',monospace; font-size:13px; font-weight:600; color:#a9b6cc;
         background:rgba(255,255,255,.06); border:1px solid rgba(255,255,255,.1); border-radius:999px;
         padding:8px 16px;}
@@ -84,7 +78,7 @@
     .card h3{font-size:23px; font-weight:800; color:var(--ink); letter-spacing:-0.01em; margin-bottom:9px;}
     .card p{font-size:15px; color:var(--muted); line-height:1.5; flex:1;}
     .card .go{margin-top:22px; display:inline-flex; align-items:center; gap:8px; align-self:flex-start;
-        font-size:15px; font-weight:700; color:#fff; background:var(--primary); padding:11px 15px; border-radius:11px; white-space:nowrap;
+        font-size:15px; font-weight:700; color:#fff; background:var(--primary); padding:11px 20px; border-radius:11px;
         transition:background .15s ease;}
     .card .go:hover{background:var(--primary-dark);}
     .card .go svg{width:16px; height:16px;}
@@ -99,8 +93,7 @@
     .about .lead{font-size:18px; color:var(--muted); max-width:760px; line-height:1.55;}
     .feat{display:grid; grid-template-columns:repeat(3,1fr); gap:22px; margin-top:36px;}
     .fc{background:var(--bg); border:1px solid var(--line); border-radius:16px; padding:24px;}
-    .fc .fi{margin-bottom:12px; height:26px;}
-    .fc .fi svg{width:26px; height:26px; display:block;}
+    .fc .fi{font-size:26px; margin-bottom:12px;}
     .fc h4{font-size:17px; font-weight:800; color:var(--ink); margin-bottom:6px;}
     .fc p{font-size:14.5px; color:var(--muted); line-height:1.5;}
     a.fc.fc-link{display:block; text-decoration:none; cursor:pointer; transition:border-color .15s, box-shadow .15s, transform .15s;}
@@ -122,7 +115,7 @@
     @media (max-width:860px){
         .deck{grid-template-columns:1fr; margin-top:-40px;}
         .feat{grid-template-columns:1fr;}
-        .hero{padding:40px 24px 64px;}
+        .hero{padding:60px 24px 80px;}
         .lockup{margin-bottom:44px;}
         footer{flex-direction:column; align-items:flex-start;}
         footer .fcredit{text-align:left;}
@@ -140,10 +133,8 @@
         </div>
         <h1>Оценка финансового здоровья компании <em>за один клик</em></h1>
         <p class="sub">Браузерный инструмент анализа бухгалтерской отчётности: финансовые коэффициенты, интегральный балл FARM‑Score, автоматические рекомендации и сценарное моделирование.</p>
-        <a class="cta" href="FinAnalyst_v3.7.1.html">Открыть приложение
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></a>
         <div class="pills">
-            <span class="pill">Версия приложения <b>v3.7.1</b></span>
+            <span class="pill">Версия приложения <b>v3.6.0</b></span>
             <span class="pill">Модель <b>FARM‑Score v3.9</b></span>
             <span class="pill"><b>100%</b> в браузере · данные не покидают ПК</span>
         </div>
@@ -176,12 +167,12 @@
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></span>
         </a>
 
-        <a class="card is-app" href="FinAnalyst_v3.7.1.html">
+        <a class="card is-app" href="FinAnalyst_v3.6.0.html">
             <div class="ic app">
                 <svg viewBox="0 0 24 24" fill="none" stroke="#2563eb" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><line x1="4" y1="20" x2="4" y2="15"></line><line x1="9.33" y1="20" x2="9.33" y2="12"></line><line x1="14.67" y1="20" x2="14.67" y2="9"></line><line x1="20" y1="20" x2="20" y2="5"></line></svg>
             </div>
             <div class="ktag app">Приложение</div>
-            <h3>FIN ANALYST<span class="badge-main">v3.7.1</span></h3>
+            <h3>FIN ANALYST<span class="badge-main">v3.6.0</span></h3>
             <p>Полнофункциональное приложение: загрузка отчётности из ГИР БО, расчёт FARM‑Score, факторный анализ, рекомендации, сценарный анализ «что если», сравнение компаний, конструктор показателей и печатные отчёты.</p>
             <span class="go">Открыть приложение
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></span>
@@ -192,12 +183,12 @@
 
 <!-- ============ ABOUT ============ -->
 <div class="about">
-    <h2>Что такое FARM‑Score</h2>
+    <h2>Что такое FARM‑Score?</h2>
     <p class="lead">Интегральная модель оценки финансового состояния компании по официальной отчётности. Один балл от 0 до 100 и грейд от A до F складываются из пяти направлений анализа.</p>
     <div class="feat">
-        <div class="fc"><div class="fi"><svg viewBox="0 0 24 24" fill="none" stroke="#2563eb" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1.6"/></svg></div><h4>Объективно</h4><p>Единая воспроизводимая методика. Один и тот же файл всегда даёт один и тот же балл — без субъективизма.</p></div>
-        <div class="fc"><div class="fi"><svg viewBox="0 0 24 24" fill="none" stroke="#0891b2" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><line x1="16.2" y1="16.2" x2="21" y2="21"/></svg></div><h4>Прозрачно</h4><p>Каждый балл раскладывается до конкретного показателя и его вклада. Методика открыта и описана внутри приложения.</p></div>
-        <a class="fc fc-link" href="FinAnalyst_SecurityBrief.html"><div class="fi"><svg viewBox="0 0 24 24" fill="none" stroke="#7c3aed" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="10.5" width="16" height="10.5" rx="2.2"/><path d="M8 10.5V7a4 4 0 0 1 8 0v3.5"/></svg></div><h4>Конфиденциально</h4><p>Все расчёты идут в браузере. Загруженная отчётность никуда не отправляется и стирается при закрытии вкладки.</p><span class="fc-more">Справка по безопасности <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></span></a>
+        <div class="fc"><div class="fi">🎯</div><h4>Объективно</h4><p>Единая воспроизводимая методика. Один и тот же файл всегда даёт один и тот же балл — без субъективизма.</p></div>
+        <div class="fc"><div class="fi">🔍</div><h4>Прозрачно</h4><p>Каждый балл раскладывается до конкретного показателя и его вклада. Методика открыта и описана внутри приложения.</p></div>
+        <a class="fc fc-link" href="FinAnalyst_SecurityBrief.html"><div class="fi">🔒</div><h4>Конфиденциально</h4><p>Все расчёты идут в браузере. Загруженная отчётность никуда не отправляется и стирается при закрытии вкладки.</p><span class="fc-more">Справка по безопасности <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></span></a>
     </div>
 </div>
 
