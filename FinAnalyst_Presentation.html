@@ -78,7 +78,8 @@
     .g3{grid-template-columns:repeat(3,1fr);}
     .g4{grid-template-columns:repeat(4,1fr);}
     .card{background:var(--soft); border:1px solid var(--line); border-radius:20px; padding:34px 34px;}
-    .card .ic{font-size:40px; line-height:1; margin-bottom:18px;}
+    .card .ic{line-height:1; margin-bottom:18px; height:46px; display:flex; align-items:center;}
+    .card .ic svg{display:block; width:46px; height:46px;}
     .card h3{font-size:28px; font-weight:800; color:var(--ink); margin-bottom:10px; letter-spacing:-0.01em;}
     .card p{font-size:24px; color:var(--muted); line-height:1.45;}
     .card .tagn{font-family:'JetBrains Mono',monospace; font-size:24px; font-weight:700; color:var(--primary);
@@ -183,9 +184,9 @@
     <div class="kicker anim">Проблема</div>
     <h2 class="slide-h anim">Финансовый анализ — это долго<br>и субъективно</h2>
     <div class="grid g3" style="margin-top:48px;">
-        <div class="card anim"><div class="ic">⏳</div><h3>Ручная работа</h3><p>Выгрузки из ГИР БО приходится перебивать в таблицы и считать коэффициенты формулами вручную.</p></div>
-        <div class="card anim2"><div class="ic">🧩</div><h3>Разрозненность</h3><p>Баланс, ОФР, ОДДС, динамика, выводы — всё в разных файлах, единой картины нет.</p></div>
-        <div class="card anim3"><div class="ic">⚖️</div><h3>Субъективность</h3><p>«Хорошо» или «плохо» — зависит от аналитика. Нет единой воспроизводимой оценки.</p></div>
+        <div class="card anim"><div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="#d97706" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 2h10M7 22h10M7 2v4a5 5 0 0 0 5 5 5 5 0 0 0 5-5V2M7 22v-4a5 5 0 0 1 5-5 5 5 0 0 1 5 5v4"/></svg></div><h3>Ручная работа</h3><p>Выгрузки из ГИР БО приходится перебивать в таблицы и считать коэффициенты формулами вручную.</p></div>
+        <div class="card anim2"><div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="#d97706" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2.5" y="2.5" width="8" height="8" rx="1.6"/><rect x="13.5" y="6" width="8" height="8" rx="1.6"/><rect x="5.5" y="13.5" width="8" height="8" rx="1.6"/></svg></div><h3>Разрозненность</h3><p>Баланс, ОФР, ОДДС, динамика, выводы — всё в разных файлах, единой картины нет.</p></div>
+        <div class="card anim3"><div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="#d97706" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3.5v17.5M7.5 21h9M5 7.5h14M12 5.6 5 7.5M12 5.6 19 7.5"/><path d="M5 7.5 2.4 14.2a2.8 2.8 0 0 0 5.2 0z"/><path d="M19 7.5l-2.6 6.7a2.8 2.8 0 0 0 5.2 0z"/></svg></div><h3>Субъективность</h3><p>«Хорошо» или «плохо» — зависит от аналитика. Нет единой воспроизводимой оценки.</p></div>
     </div>
     <div class="pageno">02</div>
 </section>
@@ -304,8 +305,8 @@
     <div class="kicker anim">Методика · корректировки</div>
     <h2 class="slide-h anim">Граничные условия и динамика</h2>
     <div class="grid g2" style="margin-top:40px;">
-        <div class="card anim2" style="border-left:6px solid var(--red);"><div class="ic">🛑</div><h3>Граничные условия</h3><p style="font-size:24px;">Критические ситуации ограничивают балл сверху. Пример: отрицательный собственный капитал ставит потолок оценки независимо от прочих показателей — компания не может считаться здоровой.</p></div>
-        <div class="card anim3" style="border-left:6px solid var(--green);"><div class="ic">📈</div><h3>Дельта‑коррекция</h3><p style="font-size:24px;">Учёт динамики год к году: устойчивое улучшение показателей добавляет баллы, ухудшение — снимает, в ограниченных пределах. Оценивается не только «срез», но и тренд.</p></div>
+        <div class="card anim2" style="border-left:6px solid var(--red);"><div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="#dc2626" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3.5 4.5h17"/><path d="M12 21.5V9"/><path d="m7 14 5-5 5 5"/></svg></div><h3>Граничные условия</h3><p style="font-size:24px;">Критические ситуации ограничивают балл сверху. Пример: отрицательный собственный капитал ставит потолок оценки независимо от прочих показателей — компания не может считаться здоровой.</p></div>
+        <div class="card anim3" style="border-left:6px solid var(--green);"><div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="#059669" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2.10 20.51 21.10H3.49Z"/></svg></div><h3>Дельта‑коррекция</h3><p style="font-size:24px;">Учёт динамики год к году: устойчивое улучшение показателей добавляет баллы, ухудшение — снимает, в ограниченных пределах. Оценивается не только «срез», но и тренд.</p></div>
     </div>
     <div class="note-box anim3"><div class="t">Единая методика</div><p>И текущий, и прошлый периоды считаются по одинаковым правилам — дельта сравнивает «яблоки с яблоками». Прошлый период берётся из загруженной отчётности, а не из отмеченных на экране лет: балл за год не зависит от того, какие ещё периоды выбраны.</p></div>
     <div class="pageno">09</div>
@@ -334,10 +335,10 @@
     <div class="kicker anim">Ценность</div>
     <h2 class="slide-h anim">Чем уникальна модель FARM‑Score</h2>
     <div class="grid g2" style="margin-top:40px;">
-        <div class="card anim2"><div class="ic">🔍</div><h3>Прозрачность</h3><p>Каждый балл раскладывается до конкретного показателя и его вклада. Никакого «чёрного ящика» — методика открыта на отдельной вкладке.</p></div>
-        <div class="card anim2"><div class="ic">🎛️</div><h3>Отраслевая настройка</h3><p>Веса и пороги адаптируются под отрасль — оценка торговой компании и завода считается по разным, корректным правилам.</p></div>
-        <div class="card anim3"><div class="ic">🔁</div><h3>Воспроизводимость</h3><p>Один и тот же файл всегда даёт один и тот же балл. Оценка не зависит от настроения аналитика.</p></div>
-        <div class="card anim3"><div class="ic">🧮</div><h3>Комплексность</h3><p>Учитывает и срез, и динамику, и критические границы — а не один-два коэффициента.</p></div>
+        <div class="card anim2"><div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="#2563eb" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><line x1="16.2" y1="16.2" x2="21" y2="21"/></svg></div><h3>Прозрачность</h3><p>Каждый балл раскладывается до конкретного показателя и его вклада. Никакого «чёрного ящика» — методика открыта на отдельной вкладке.</p></div>
+        <div class="card anim2"><div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="#7c3aed" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 21v-6.5M4 10.5V3M12 21v-8.5M12 8.5V3M20 21v-4.5M20 12.5V3"/><path d="M1.5 14.5h5M9.5 8.5h5M17.5 12.5h5"/></svg></div><h3>Отраслевая настройка</h3><p>Веса и пороги адаптируются под отрасль — оценка торговой компании и завода считается по разным, корректным правилам.</p></div>
+        <div class="card anim3"><div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="#2563eb" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20.5 12a8.5 8.5 0 0 1-14.6 5.9"/><path d="M3.5 12a8.5 8.5 0 0 1 14.6-5.9"/><polyline points="18.4 2.4 18.4 6.4 14.4 6.4"/><polyline points="5.6 21.6 5.6 17.6 9.6 17.6"/></svg></div><h3>Воспроизводимость</h3><p>Один и тот же файл всегда даёт один и тот же балл. Оценка не зависит от настроения аналитика.</p></div>
+        <div class="card anim3"><div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="#7c3aed" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m12 2.5 9 4.6-9 4.6-9-4.6 9-4.6Z"/><path d="m3 12.2 9 4.6 9-4.6"/><path d="m3 16.9 9 4.6 9-4.6"/></svg></div><h3>Комплексность</h3><p>Учитывает и срез, и динамику, и критические границы — а не один-два коэффициента.</p></div>
     </div>
     <div class="pageno">11</div>
 </section>
@@ -480,12 +481,12 @@
     <div class="kicker anim">Для бизнеса</div>
     <h2 class="slide-h anim">Что это даёт</h2>
     <div class="grid g3" style="margin-top:44px;">
-        <div class="card anim"><div class="ic">⚡</div><h3>Скорость</h3><p>От файла до обоснованного вывода — минуты вместо часов ручных расчётов.</p></div>
-        <div class="card anim2"><div class="ic">🎯</div><h3>Объективность</h3><p>Единая воспроизводимая методика. Решения опираются на цифры, а не на интуицию.</p></div>
-        <div class="card anim3"><div class="ic">🔒</div><h3>Безопасность</h3><p>Данные не покидают компьютер. Подходит для чувствительной отчётности.</p></div>
-        <div class="card anim"><div class="ic">📊</div><h3>Для кого</h3><p>Кредитный анализ, due diligence, мониторинг контрагентов и портфеля.</p></div>
-        <div class="card anim2"><div class="ic">🧭</div><h3>Прозрачность</h3><p>Любой балл объясним до показателя — удобно отстаивать выводы.</p></div>
-        <div class="card anim3"><div class="ic">🖨️</div><h3>Отчётность</h3><p>Печать и PDF любой вкладки — готовый материал для отчёта.</p></div>
+        <div class="card anim"><div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="#059669" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polygon points="13 2 4 14 11 14 10 22 20 10 13 10 13 2"/></svg></div><h3>Скорость</h3><p>От файла до обоснованного вывода — минуты вместо часов ручных расчётов.</p></div>
+        <div class="card anim2"><div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="#2563eb" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1.6"/></svg></div><h3>Объективность</h3><p>Единая воспроизводимая методика. Решения опираются на цифры, а не на интуицию.</p></div>
+        <div class="card anim3"><div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="#7c3aed" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="10.5" width="16" height="10.5" rx="2.2"/><path d="M8 10.5V7a4 4 0 0 1 8 0v3.5"/></svg></div><h3>Безопасность</h3><p>Данные не покидают компьютер. Подходит для чувствительной отчётности.</p></div>
+        <div class="card anim"><div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="#7c3aed" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15.5 20.5v-1.8a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v1.8"/><circle cx="8.75" cy="7.5" r="3.6"/><path d="M22 20.5v-1.8a4 4 0 0 0-3-3.86"/><path d="M16.2 4.1a4 4 0 0 1 0 7"/></svg></div><h3>Для кого</h3><p>Кредитный анализ, due diligence, мониторинг контрагентов и портфеля.</p></div>
+        <div class="card anim2"><div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="#2563eb" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><line x1="16.2" y1="16.2" x2="21" y2="21"/></svg></div><h3>Прозрачность</h3><p>Любой балл объясним до показателя — удобно отстаивать выводы.</p></div>
+        <div class="card anim3"><div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="#059669" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6.5 9V3h11v6"/><path d="M6.5 18.5h-2a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h15a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6.5" y="14" width="11" height="7.5" rx="1.6"/></svg></div><h3>Отчётность</h3><p>Печать и PDF любой вкладки — готовый материал для отчёта.</p></div>
     </div>
     <div class="pageno">19</div>
 </section>
@@ -496,9 +497,9 @@
     <div class="kicker anim">Надёжность</div>
     <h2 class="slide-h anim">Данные, которым можно доверять</h2>
     <div class="grid g3" style="margin-top:44px;">
-        <div class="card anim"><div class="ic">🕓</div><h3>Приоритет свежих данных</h3><p>При совпадении периода берётся значение из более позднего отчёта; пересмотренные периоды помечаются значком ⚠.</p></div>
-        <div class="card anim2"><div class="ic">🔀</div><h3>Не зависит от порядка</h3><p>Результат одинаков, в каком бы порядке вы ни загрузили файлы отчётности.</p></div>
-        <div class="card anim3"><div class="ic">🎯</div><h3>Единый источник</h3><p>Все вкладки — коэффициенты, FARM-Score, факторы — считают из одних и тех же распознанных данных.</p></div>
+        <div class="card anim"><div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="#2563eb" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><polyline points="12 6.8 12 12 15.6 14.2"/></svg></div><h3>Приоритет свежих данных</h3><p>При совпадении периода берётся значение из более позднего отчёта; пересмотренные периоды помечаются значком ⚠.</p></div>
+        <div class="card anim2"><div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="#2563eb" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m17.5 3.5 3 3-3 3"/><path d="m17.5 14.5 3 3-3 3"/><path d="M3 6.5h4l10 11h3.5"/><path d="M3 17.5h4l2.6-2.9"/><path d="m14.4 9.4 2.6-2.9h3.5"/></svg></div><h3>Не зависит от порядка</h3><p>Результат одинаков, в каком бы порядке вы ни загрузили файлы отчётности.</p></div>
+        <div class="card anim3"><div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="#2563eb" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><ellipse cx="12" cy="5.4" rx="8" ry="3"/><path d="M4 5.4v6.2c0 1.66 3.58 3 8 3s8-1.34 8-3V5.4"/><path d="M4 11.6v6.2c0 1.66 3.58 3 8 3s8-1.34 8-3v-6.2"/></svg></div><h3>Единый источник</h3><p>Все вкладки — коэффициенты, FARM-Score, факторы — считают из одних и тех же распознанных данных.</p></div>
     </div>
     <div class="pageno">20</div>
 </section>
